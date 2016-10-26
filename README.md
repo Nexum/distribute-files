@@ -1,11 +1,11 @@
 # distribute-files
 
-##### 1. Installation
+### 1. Installation
 ```
     npm install distribute-files
 ```
 
-##### 2. Usage
+### 2. Usage
 
 ###### Configuration
 ```
@@ -97,7 +97,7 @@ new Distributor({
 ]).then(success, error)
 ```
 
-##### 3. Features
+### 3. Features
 
 Distribute/Upload any number of files to any number of servers.
 
@@ -107,3 +107,12 @@ FTP
 SFTP
 
 Custom Function
+
+### 4. Development
+
+###### Run Tests
+```
+    npm install mocha -g
+    npm install
+    npm test
+```
