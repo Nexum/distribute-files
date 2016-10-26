@@ -34,6 +34,7 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "ftp": "^0.3.10",
-    "ssh2": "^0.5.2"
+    "ssh2": "^0.5.2",
+    "ssh2-sftp-client": "^1.0.5"
   }
 }

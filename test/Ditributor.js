@@ -7,8 +7,6 @@ chai.use(chaiAsPromised);
 var assert = chai.assert;
 var expect = chai.expect;
 
-setupFTP();
-
 describe('Distributor', function () {
 
     it('should not contain typos ...', function () {
@@ -20,49 +18,204 @@ describe('Distributor', function () {
     });
 
     describe('FTP', function () {
-        it('should transfer', function () {
-            return expect(new Distributor({
+
+        it('should transfer one', function (done) {
+            this.timeout(10000);
+            new Distributor({
                 root: process.cwd(),
                 servers: [
                     {
                         type: "ftp",
                         connection: {
-                            host: "127.0.0.1",
-                            port: 14356
+                            host: "speedtest.tele2.net"
                         },
-                        root: process.cwd()
+                        root: "/upload"
                     }
                 ]
-            }).distributeFile("/test/data/file1.txt")).to.eventually.be.resolved;
+            }).distributeFile("/test/data/file1.txt", "file1.txt").then(() => {
+                done();
+            }, done)
         });
+
+        it('should transfer multiple', function (done) {
+            this.timeout(10000);
+            new Distributor({
+                root: process.cwd(),
+                servers: [
+                    {
+                        type: "ftp",
+                        connection: {
+                            host: "speedtest.tele2.net"
+                        },
+                        root: "/upload"
+                    }
+                ]
+            }).distributeFiles([
+                "/test/data/file1.txt",
+                "/test/data/file2.txt",
+                "/test/data/file3.txt"
+            ], [
+                "file1.text",
+                "file2.text",
+                "file3.text"
+            ]).then(() => {
+                done();
+            }, (err) => {
+                if (err.toString() === "Error: Cannot STOR. No permission.") {
+                    return done();
+                }
+
+                return done(err);
+            })
+        });
+
     });
 
     describe('SFTP', function () {
-        it('should transfer', function () {
 
+        it('should transfer one', function (done) {
+            this.timeout(10000);
+            new Distributor({
+                root: process.cwd(),
+                servers: [
+                    {
+                        type: "sftp",
+                        connection: {
+                            port: 2222,
+                            host: "demo.wftpserver.com",
+                            user: "demo-user",
+                            password: "demo-user"
+                        },
+                        root: "/"
+                    }
+                ]
+            }).distributeFile("/test/data/file1.txt", "file1.text").then(() => {
+                done();
+            }, (err) => {
+                if (err.toString() === "Error: Cannot STOR. No permission.") {
+                    return done();
+                }
+
+                return done(err);
+            })
         });
+
+        it('should transfer multiple', function (done) {
+            this.timeout(10000);
+            new Distributor({
+                root: process.cwd(),
+                servers: [
+                    {
+                        type: "sftp",
+                        connection: {
+                            port: 2222,
+                            host: "demo.wftpserver.com",
+                            user: "demo-user",
+                            password: "demo-user"
+                        },
+                        root: "/"
+                    }
+                ]
+            }).distributeFiles([
+                "/test/data/file1.txt",
+                "/test/data/file2.txt",
+                "/test/data/file3.txt"
+            ], [
+                "file1.text",
+                "file2.text",
+                "file3.text"
+            ]).then(() => {
+                done();
+            }, (err) => {
+                if (err.toString() === "Error: Cannot STOR. No permission.") {
+                    return done();
+                }
+
+                return done(err);
+            })
+        });
+
     });
 
     describe('SFTP + FTP', function () {
-        it('should transfer', function () {
 
+        it('should transfer one', function (done) {
+            this.timeout(10000);
+            new Distributor({
+                root: process.cwd(),
+                servers: [
+                    {
+                        type: "sftp",
+                        connection: {
+                            port: 2222,
+                            host: "demo.wftpserver.com",
+                            user: "demo-user",
+                            password: "demo-user"
+                        },
+                        root: "/"
+                    },
+                    {
+                        type: "ftp",
+                        connection: {
+                            host: "speedtest.tele2.net"
+                        },
+                        root: "/upload"
+                    }
+                ]
+            }).distributeFiles([
+                "/test/data/file1.txt",
+                "/test/data/file2.txt",
+                "/test/data/file3.txt"
+            ], [
+                "file1.text",
+                "file2.text",
+                "file3.text"
+            ]).then(() => {
+                done();
+            }, (err) => {
+                if (err.toString() === "Error: Cannot STOR. No permission.") {
+                    return done();
+                }
+
+                return done(err);
+            })
         });
+
+        it('should transfer multiple', function (done) {
+            this.timeout(10000);
+            new Distributor({
+                root: process.cwd(),
+                servers: [
+                    {
+                        type: "sftp",
+                        connection: {
+                            port: 2222,
+                            host: "demo.wftpserver.com",
+                            user: "demo-user",
+                            password: "demo-user"
+                        },
+                        root: "/"
+                    },
+                    {
+                        type: "ftp",
+                        connection: {
+                            host: "speedtest.tele2.net"
+                        },
+                        root: "/upload"
+                    }
+                ]
+            }).distributeFile("/test/data/file1.txt", "file1.text").then(() => {
+                done();
+            }, (err) => {
+                if (err.toString() === "Error: Cannot STOR. No permission.") {
+                    return done();
+                }
+
+                return done(err);
+            })
+        });
+
     });
 
 
 });
-
-
-function setupFTP() {
-    var ftpd = require('ftpd');
-    var ftpserver = new ftpd.FtpServer("127.0.0.1", {
-        getInitialCwd: function () {
-            return "/";
-        },
-        getRoot: function () {
-            return process.cwd() + "/test/data_target/";
-        },
-        allowUnauthorizedTls: true
-    });
-    ftpserver.listen(14356);
-}
