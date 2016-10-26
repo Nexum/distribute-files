@@ -101,6 +101,8 @@ new Distributor({
 
 Distribute/Upload any number of files to any number of servers.
 
+Transfers as tmp files to ensure the data on the server is always valid. Removes tmp files if anything fails during the process.
+
 ###### Strategies
 FTP
 
