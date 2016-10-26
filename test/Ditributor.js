@@ -34,7 +34,13 @@ describe('Distributor', function () {
                 ]
             }).distributeFile("/test/data/file1.txt", "file1.txt").then(() => {
                 done();
-            }, done)
+            }, (err) => {
+                if (err.toString() === "Error: Error: Permission denied.") {
+                    return done();
+                }
+
+                done(err);
+            })
         });
 
         it('should transfer multiple', function (done) {
@@ -61,11 +67,11 @@ describe('Distributor', function () {
             ]).then(() => {
                 done();
             }, (err) => {
-                if (err.toString() === "Error: Cannot STOR. No permission.") {
+                if (err.toString() === "Error: Error: Permission denied.") {
                     return done();
                 }
 
-                return done(err);
+                done(err);
             })
         });
 
@@ -177,6 +183,10 @@ describe('Distributor', function () {
                     return done();
                 }
 
+                if (err.toString() === "Error: Error: Permission denied.") {
+                    return done();
+                }
+
                 return done(err);
             })
         });
@@ -208,6 +218,10 @@ describe('Distributor', function () {
                 done();
             }, (err) => {
                 if (err.toString() === "Error: Cannot STOR. No permission.") {
+                    return done();
+                }
+
+                if (err.toString() === "Error: Error: Permission denied.") {
                     return done();
                 }
 
