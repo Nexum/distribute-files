@@ -1,0 +1,36 @@
+{
+  "name": "distribute-files",
+  "version": "1.0.0",
+  "description": "Distributes files to multiple configured servers using multiple diffrent delivery systems",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexum/distribute-files.git"
+  },
+  "keywords": [
+    "distribute",
+    "files",
+    "sftp",
+    "ftp",
+    "ssh",
+    "sync",
+    "upload"
+  ],
+  "author": "Dominik Kienzler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nexum/distribute-files/issues"
+  },
+  "homepage": "https://github.com/Nexum/distribute-files#readme",
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "ftp": "^0.3.10",
+    "ssh2": "^0.5.2"
+  }
+}
