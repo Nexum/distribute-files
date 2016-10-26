@@ -4,6 +4,7 @@
 
 npm-debug.log
 node_modules
+test/data_target/*
 
 ####################
 ### IDE ############
