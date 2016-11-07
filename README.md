@@ -9,6 +9,7 @@
 
 ###### Configuration
 ```
+   var Distributor = require("distribute-files").Distributor;
    new Distributor({
        debug: Boolean,                      // Show debug messages
        root: String,                        // The root for all local files, leave empty if none should be used, you will have to supply an absolute path later,
@@ -88,7 +89,7 @@ new Distributor({
             root: "/upload"
         }
     ]
-}).distributeFile([
+}).distributeFiles([
     "/file1.txt",
     "/file2.txt"
 ], [
