@@ -1,6 +1,6 @@
 {
   "name": "distribute-files",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Distributes files to multiple configured servers using multiple diffrent delivery systems",
   "main": "index.js",
   "scripts": {
