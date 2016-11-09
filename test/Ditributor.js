@@ -168,15 +168,7 @@ describe('Distributor', function () {
                         root: "/upload"
                     }
                 ]
-            }).distributeFiles([
-                "/test/data/file1.txt",
-                "/test/data/file2.txt",
-                "/test/data/file3.txt"
-            ], [
-                "file1.text",
-                "file2.text",
-                "file3.text"
-            ]).then(() => {
+            }).distributeFile("/test/data/file1.txt", "file1.text").then(() => {
                 done();
             }, (err) => {
                 if (err.toString() === "Error: Cannot STOR. No permission.") {
@@ -214,7 +206,15 @@ describe('Distributor', function () {
                         root: "/upload"
                     }
                 ]
-            }).distributeFile("/test/data/file1.txt", "file1.text").then(() => {
+            }).distributeFiles([
+                "/test/data/file1.txt",
+                "/test/data/file2.txt",
+                "/test/data/file3.txt"
+            ], [
+                "file1.text",
+                "file2.text",
+                "file3.text"
+            ]).then(() => {
                 done();
             }, (err) => {
                 if (err.toString() === "Error: Cannot STOR. No permission.") {
